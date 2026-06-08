@@ -11,6 +11,8 @@ export const config = {
   nodeEnv: process.env.NODE_ENV || 'development',
   isProd,
   cookieSecure: isProd,
+  authRateLimitWindowMs: Number(process.env.AUTH_RATE_LIMIT_WINDOW_MS) || 60_000,
+  authRateLimitMax: Number(process.env.AUTH_RATE_LIMIT_MAX) || 30,
 };
 
 if (config.isProd && config.jwtSecret === 'dev-only-change-in-production') {

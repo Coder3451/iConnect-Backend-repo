@@ -1,9 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import helmet from 'helmet';
 import { config } from './config.js';
 import authRoutes from './routes/auth.js';
 import writingsRoutes from './routes/writings.js';
+import { authRateLimiter } from './middleware/rateLimit.js';
 
 export function createApp() {
   const app = express();
@@ -14,6 +16,7 @@ export function createApp() {
       credentials: true,
     })
   );
+  app.use(helmet());
   app.use(express.json({ limit: '2mb' }));
   app.use(cookieParser());
 
@@ -21,7 +24,7 @@ export function createApp() {
     res.json({ ok: true, name: 'iConnect' });
   });
 
-  app.use('/api/auth', authRoutes);
+  app.use('/api/auth', authRateLimiter, authRoutes);
   app.use('/api/writings', writingsRoutes);
 
   app.use('/api', (_req, res) => {
