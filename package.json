@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "node --watch server/index.js",
     "start": "node server/index.js",
+    "test": "node --test",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "eslint": "^9.31.0",
-    "globals": "^15.9.0"
+    "globals": "^15.9.0",
+    "supertest": "^7.1.1"
   }
 }
